@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support – SnackPet</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #4caf50;
+      --green-dark:  #388e3c;
+      --green-light: #e8f5e9;
+      --text:        #1a1a1a;
+      --muted:       #666;
+      --border:      #e5e5e5;
+      --card-bg:     #f9f9f9;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                   "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: #fff;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 16px 72px;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 44px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* ── Contact card ── */
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: var(--green-light);
+      border: 1px solid #c8e6c9;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 44px;
+    }
+
+    .contact-card .c-icon { font-size: 2rem; flex-shrink: 0; }
+
+    .contact-card h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      border: none;
+      padding: 0;
+    }
+
+    .contact-card p { font-size: 0.92rem; color: #2e7d32; margin: 0; }
+    .contact-card a { color: var(--green-dark); font-weight: 600; }
+
+    /* ── Sections ── */
+    section { margin-bottom: 44px; }
+
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ── FAQ accordion ── */
+    details {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      background: var(--card-bg);
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.97rem;
+      padding: 16px 18px;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: "＋";
+      font-size: 1.1rem;
+      color: var(--green);
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
+
+    details[open] summary::after { content: "－"; }
+
+    details[open] summary {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-body {
+      padding: 14px 18px;
+      font-size: 0.92rem;
+      color: #333;
+      line-height: 1.65;
+    }
+
+    .faq-body p { margin-bottom: 8px; }
+    .faq-body p:last-child { margin-bottom: 0; }
+    .faq-body ul { padding-left: 18px; }
+    .faq-body ul li { margin-bottom: 5px; }
+
+    /* ── Step list ── */
+    .steps { counter-reset: step; list-style: none; padding: 0; }
+
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .steps li::before {
+      content: counter(step);
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--green);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 3px;
+    }
+
+    .steps li p {
+      font-size: 0.93rem;
+      margin: 0;
+      color: var(--text);
+    }
+
+    .steps li strong { display: block; margin-bottom: 2px; }
+
+    /* ── Warn / tip boxes ── */
+    .tip {
+      background: var(--green-light);
+      border-left: 4px solid var(--green);
+      border-radius: 6px;
+      padding: 13px 17px;
+      font-size: 0.91rem;
+      color: #2e7d32;
+      margin-bottom: 14px;
+    }
+
+    .warn {
+      background: #fff8e1;
+      border-left: 4px solid #ffc107;
+      border-radius: 6px;
+      padding: 13px 17px;
+      font-size: 0.91rem;
+      color: #7b5e00;
+      margin-bottom: 14px;
+    }
+
+    /* ── Compatibility table ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    table th, table td {
+      text-align: left;
+      padding: 10px 13px;
+      border: 1px solid var(--border);
+    }
+
+    table th { background: #f4f4f4; font-weight: 600; }
+    table tr:nth-child(even) td { background: #fafafa; }
+
+    /* ── Nav links ── */
+    a { color: #1a73e8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .doc-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .doc-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card-bg);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color .15s;
+    }
+
+    .doc-link:hover { border-color: var(--green); text-decoration: none; }
+    .doc-link .dl-icon { font-size: 1.3rem; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.84rem;
+      color: #999;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    footer a { color: #999; }
+    footer a:hover { color: #555; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Support</h1>
+  <p>SnackPet — Smart Cat Feeder Companion · Android &amp; iOS</p>
+</header>
+
+<!-- ── Contact ── -->
+<div class="contact-card">
+  <div class="c-icon">✉️</div>
+  <div>
+    <h2>Contact Us</h2>
+    <p>Can't find an answer below? Email us directly at<br/>
+      <a href="mailto:jakushev.r@lasertag.net">jakushev.r@lasertag.net</a> — we typically respond within 1–2 business days.
+    </p>
+  </div>
+</div>
+
+<!-- ── Getting Started ── -->
+<section>
+  <h2><span>🚀</span> Getting Started</h2>
+
+  <ol class="steps">
+    <li><p><strong>Power on your feeder</strong>Place the feeder within ~10 m of your phone.</p></li>
+    <li><p><strong>Grant Bluetooth permission</strong>On first launch tap <em>Allow</em> when prompted — Bluetooth access is required.</p></li>
+    <li><p><strong>Scan for your device</strong>Tap <em>"Find Device"</em> on the Home screen. Select your feeder from the list.</p></li>
+    <li><p><strong>Wait for connection</strong>The App syncs the clock and reads the current schedule (takes 2–5 s on first pair).</p></li>
+    <li><p><strong>Set meal schedules</strong>Go to the <em>Schedule</em> tab → tap <strong>＋</strong> → pick time and portion → save.</p></li>
+  </ol>
+
+  <div class="tip">
+    After the first connection the App remembers your feeder and reconnects automatically every time you open it.
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section>
+  <h2><span>❓</span> Frequently Asked Questions</h2>
+
+  <details>
+    <summary>The App can't find my feeder during scan</summary>
+    <div class="faq-body">
+      <ul>
+        <li>Make sure the feeder is powered on and the indicator light is active.</li>
+        <li>Bring the phone within 2–3 m of the feeder for the initial scan.</li>
+        <li>Ensure Bluetooth is enabled in your phone's Settings.</li>
+        <li>On Android 11 and below, Location Services must also be enabled (required by the OS for BLE scanning — the App does not use your actual location).</li>
+        <li>Try force-closing the App and reopening it, then scan again.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>The connection keeps dropping</summary>
+    <div class="faq-body">
+      <ul>
+        <li>Move the phone closer to the feeder. BLE range is ~10 m in open space but drops significantly through walls.</li>
+        <li>Avoid placing the feeder near Wi-Fi routers, microwaves, or other 2.4 GHz devices — they interfere with BLE.</li>
+        <li>Check that the feeder battery/power supply is not low.</li>
+        <li>Restart both the feeder and Bluetooth on your phone, then reconnect.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>My meal schedule didn't save to the feeder</summary>
+    <div class="faq-body">
+      <p>The schedule is written to the feeder over BLE during the save operation. If the connection drops mid-write, the schedule may be incomplete.</p>
+      <ul>
+        <li>Reconnect to the feeder and open the Schedule tab to verify the current schedule.</li>
+        <li>Re-enter any missing meals and save again while staying connected.</li>
+        <li>Keep the phone within range until the save confirmation appears.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>The feeder is dispensing at the wrong time</summary>
+    <div class="faq-body">
+      <p>The feeder uses its internal clock to trigger meals. The App syncs your phone's date and time to the feeder at every connection.</p>
+      <ul>
+        <li>Open the App and reconnect — this re-syncs the clock automatically.</li>
+        <li>Check that your phone's date, time, and time zone are correct in System Settings.</li>
+        <li>If the feeder was powered off for an extended period, its clock may have reset — reconnect to re-sync.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>How many meals can I schedule per day?</summary>
+    <div class="faq-body">
+      <p>The feeder supports up to <strong>10 meal entries per day</strong>. Each entry has an independent time (hour + minute) and portion size (1–10 scoops, where 1 scoop ≈ 50 g).</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Does the App require internet or a cloud account?</summary>
+    <div class="faq-body">
+      <p>No. SnackPet is fully offline. It communicates directly with your feeder via Bluetooth and requires no internet connection, account registration, or cloud service.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>How do I unpair / forget the feeder?</summary>
+    <div class="faq-body">
+      <p>Go to the <strong>Settings</strong> screen inside the App and tap <em>"Forget Device"</em>. The App will remove the saved device ID and return to the scan screen on next launch.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>I reinstalled the App — do I need to set up everything again?</summary>
+    <div class="faq-body">
+      <p>The feeding schedule is stored on the feeder hardware, so your meals are safe. After reinstalling you will need to scan and reconnect once — the App will then read the existing schedule from the feeder automatically.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>What Bluetooth version does the feeder require?</summary>
+    <div class="faq-body">
+      <p>The feeder uses <strong>Bluetooth Low Energy (BLE) 4.0</strong> or later. Any modern Android or iOS device supports this.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ── Compatibility ── -->
+<section>
+  <h2><span>📱</span> Platform Compatibility</h2>
+
+  <table>
+    <thead>
+      <tr><th>Platform</th><th>Minimum version</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Android</td>
+        <td>Android 8.0 (API 26)</td>
+        <td>Bluetooth + Location permission required on Android ≤ 11</td>
+      </tr>
+      <tr>
+        <td>iOS</td>
+        <td>iOS 14</td>
+        <td>Bluetooth Always permission required</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ── Reset steps ── -->
+<section>
+  <h2><span>🔄</span> Full Reset Procedure</h2>
+  <p>If the App and feeder are out of sync or behaving unexpectedly, follow these steps:</p>
+
+  <ol class="steps">
+    <li><p><strong>Forget the device in-app</strong>Settings → <em>Forget Device</em>.</p></li>
+    <li><p><strong>Restart the feeder</strong>Power it off for 10 seconds, then back on.</p></li>
+    <li><p><strong>Toggle Bluetooth</strong>Turn Bluetooth off and on again on your phone.</p></li>
+    <li><p><strong>Rescan &amp; reconnect</strong>Tap <em>Find Device</em>, select your feeder, and let the App finish syncing.</p></li>
+    <li><p><strong>Re-enter your schedule</strong>Go to Schedule → add your meals again.</p></li>
+  </ol>
+
+  <div class="warn">
+    If the feeder still behaves unexpectedly after a full reset, please contact us with your device model and OS version.
+  </div>
+</section>
+
+<!-- ── Other docs ── -->
+<section>
+  <h2><span>📄</span> Other Documents</h2>
+  <div class="doc-links">
+    <a class="doc-link" href="about.html"><span class="dl-icon">📱</span> About SnackPet</a>
+    <a class="doc-link" href="privacy-policy.html"><span class="dl-icon">🔒</span> Privacy Policy</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 SnackPet. All rights reserved.</span>
+  <span>
+    <a href="about.html">About</a> &nbsp;·&nbsp;
+    <a href="privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="mailto:jakushev.r@lasertag.net">Contact</a>
+  </span>
+</footer>
+
+</body>
+</html>
